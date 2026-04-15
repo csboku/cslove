@@ -2,6 +2,7 @@
 -- Handles level loading, player/enemy logic, building interaction, and drawing.
 
 local Player = require("player")
+local Dog    = require("dog")
 local Camera = require("camera")
 local Utils  = require("utils")
 
@@ -9,6 +10,7 @@ local PlayState = {}
 
 -- ── Module-level state (re-initialized each time enter() is called) ──
 local player
+local dog
 local camera
 local boxes    = {}
 local enemies  = {}
@@ -32,6 +34,7 @@ function PlayState:enter(level)
     levelData = require("levels.level" .. currentLevel)
 
     player = Player.new(levelData.playerStart.x, levelData.playerStart.y)
+    dog    = Dog.new(levelData.playerStart.x - 40, levelData.playerStart.y)
     camera = Camera.new()
 
     boxes   = {}
@@ -81,8 +84,8 @@ function PlayState:enter(level)
         building = {
             x = levelData.building.x,
             y = levelData.building.y,
-            width     = levelData.building.width  or 120,
-            height    = levelData.building.height or 150,
+            width     = levelData.building.width  or 220,
+            height    = levelData.building.height or 250,
             doorWidth  = 40,
             doorHeight = 60,
         }
@@ -111,6 +114,7 @@ function PlayState:update(dt, game)
 
     -- Player physics (handles boxes internally)
     player:update(dt, boxes)
+    dog:update(dt, player, boxes)
     camera:update(dt, player.x + player.width / 2)
 
     -- ── Enemy logic ──
@@ -268,7 +272,7 @@ function PlayState:draw(game)
 
         love.graphics.setFont(deathFont)
         love.graphics.setColor(1, 0.2, 0.2)
-        love.graphics.printf("SYSTEM CRITICAL FAILURE", 0, 250, 800, "center")
+        love.graphics.printf("TOT", 0, 250, 800, "center")
         love.graphics.setColor(1, 1, 1)
         love.graphics.printf("Press 'R' to Reboot", 0, 290, 800, "center")
         love.graphics.setFont(uiFont)
@@ -382,6 +386,9 @@ function PlayState:drawWorld()
             love.graphics.rectangle("fill", enemy.x + 10, enemy.y + 10, 10, 10)
         end
     end
+
+    -- ── Dog (drawn behind player) ──
+    dog:draw()
 
     -- ── Player ──
     player:draw()

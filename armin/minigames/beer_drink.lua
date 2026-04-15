@@ -96,17 +96,17 @@ end
 function BeerDrink:draw()
     -- ── Header ──
     love.graphics.setColor(1, 0.85, 0)
-    love.graphics.printf("BEER DRINKING CHALLENGE", 0, 85, 800, "center")
+    love.graphics.printf("BEER DRINKING", 0, 85, 800, "center")
     love.graphics.setColor(0.7, 0.7, 0.7)
-    love.graphics.printf(
-        "Press SPACE when the marker is in the green zone!",
-        0, 105, 800, "center"
-    )
+    -- love.graphics.printf(
+    --     "Press SPACE when the marker is in the green zone!",
+    --     0, 105, 800, "center"
+    -- )
 
     -- Progress
     love.graphics.setColor(1, 1, 1)
     love.graphics.printf(
-        "Gulps: " .. gulps .. " / " .. maxGulps,
+        "Schlucke: " .. gulps .. " / " .. maxGulps,
         0, 125, 800, "center"
     )
 
@@ -193,10 +193,10 @@ function BeerDrink:draw()
 
     -- Speed indicator
     love.graphics.setColor(0.5, 0.5, 0.6)
-    love.graphics.printf(
-        "Speed: " .. string.format("%.1f", cursorSpeed) .. "x",
-        0, 410, 800, "center"
-    )
+    -- love.graphics.printf(
+    --     "Speed: " .. string.format("%.1f", cursorSpeed) .. "x",
+    --     0, 410, 800, "center"
+    -- )
 end
 
 return BeerDrink

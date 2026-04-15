@@ -44,6 +44,19 @@ function love.update(dt)
 end
 
 function love.keypressed(key)
+    -- F5 = global restart from level 1 (handy during development)
+    if key == "f5" then
+        Game.currentLevel = 1
+        Game.switchState("play", 1)
+        return
+    end
+
+    -- F6 = reload current level (restart the level you're on)
+    if key == "f6" then
+        Game.switchState("play", Game.currentLevel)
+        return
+    end
+
     if Game.currentState and Game.currentState.keypressed then
         Game.currentState:keypressed(key, Game)
     end

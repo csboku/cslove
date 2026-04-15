@@ -6,7 +6,7 @@ return {
     playerStart = { x = 100, y = 400 },
 
     building = {
-        x = 3200, y = 350, width = 120, height = 150,
+        x = 3200, y = 350, width = 220, height = 250,
     },
 
     boxes = {

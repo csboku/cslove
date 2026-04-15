@@ -7,7 +7,7 @@ return {
 
     -- Building at the end of the level (enter to trigger minigame)
     building = {
-        x = 2400, y = 350, width = 120, height = 150,
+        x = 2400, y = 250, width = 220, height = 250,
     },
 
     boxes = {
@@ -19,9 +19,11 @@ return {
         { x = 1000, y = 300, width = 80,  height = 20,  type = "solid" },
         { x = 1200, y = 200, width = 80,  height = 20,  type = "solid" },
         -- Upper platform
-        { x = 1500, y = 100, width = 500, height = 20,  type = "solid" },
+        --{ x = 1500, y = 100, width = 500, height = 20,  type = "solid" },
         -- Ground below the upper platform
-        { x = 1400, y = 550, width = 800, height = 100, type = "solid" },
+        { x = 1400, y = 550, width = 200, height = 100, type = "solid" },
+        { x = 1700, y = 550, width = 300, height = 100, type = "solid" },
+
         -- Bouncy pad
         { x = 2000, y = 530, width = 100, height = 20,  type = "bouncy" },
         -- Final ground with building
