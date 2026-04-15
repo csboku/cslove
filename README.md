@@ -4,5 +4,7 @@
 
 ### armin
 
-Small game for Armins 30th birtday party
+Small 2D platformer game for Armins 30th birtday party
 
+- To-Do
+    - [ ] New Graphics
