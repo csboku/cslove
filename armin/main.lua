@@ -4,6 +4,7 @@
 local PlayState     = require("states.play")
 local BuildingState = require("states.building")
 local VictoryState  = require("states.victory")
+local Assets        = require("assets")
 
 local stateMap = {
     play     = PlayState,
@@ -34,6 +35,7 @@ function love.load()
     love.window.setTitle("Neon Runner")
     love.window.setMode(800, 600)
     math.randomseed(os.time())
+    Assets.load()
     Game.switchState("play", 1)
 end
 

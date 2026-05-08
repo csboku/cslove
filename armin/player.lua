@@ -1,6 +1,7 @@
 -- player.lua — Player entity (movement, physics, drawing)
 
-local Utils = require("utils")
+local Utils  = require("utils")
+local Assets = require("assets")
 
 local Player = {}
 Player.__index = Player
@@ -9,8 +10,8 @@ function Player.new(x, y)
     local self = setmetatable({}, Player)
     self.x = x or 100
     self.y = y or 100
-    self.width  = 30
-    self.height = 30
+    self.width  = 40
+    self.height = 40
     self.dx = 0
     self.dy = 0
     self.acceleration  = 800
@@ -131,17 +132,36 @@ function Player:releaseJump()
 end
 
 function Player:draw()
-    -- Neon green body
-    love.graphics.setColor(0.1, 1.0, 0.6)
-    love.graphics.rectangle("fill", self.x, self.y, self.width, self.height)
+    -- Pick sprite: walk if moving, idle otherwise
+    local moving = math.abs(self.dx) > 10
+    local sprite
+    if moving then
+        sprite = Assets.playerWalkRight
+    else
+        sprite = Assets.playerIdleRight
+    end
 
-    -- White directional edge
+    -- Fall back to rectangle if sprites aren't loaded yet
+    if not sprite then
+        love.graphics.setColor(0.1, 1.0, 0.6)
+        love.graphics.rectangle("fill", self.x, self.y, self.width, self.height)
+        return
+    end
+
+    local sw, sh = sprite:getDimensions()
+    local scaleX = self.width / sw
+    local scaleY = self.height / sh
+    -- Align sprite bottom to hitbox bottom
+    local oy = 0
+
     love.graphics.setColor(1, 1, 1)
     if self.facingRight then
-        love.graphics.rectangle("fill", self.x + self.width - 6, self.y, 6, self.height)
+        love.graphics.draw(sprite, self.x, self.y, 0, scaleX, scaleY)
     else
-        love.graphics.rectangle("fill", self.x, self.y, 6, self.height)
+        -- Flip horizontally: draw at right edge, negative scaleX
+        love.graphics.draw(sprite, self.x + self.width, self.y, 0, -scaleX, scaleY)
     end
 end
 
 return Player
+

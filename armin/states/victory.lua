@@ -133,9 +133,9 @@ function VictoryState:draw(game)
     love.graphics.printf("Auf die nächsten 30!", 0, 345, 800, "center")
 
     -- Decorative beer + cake emojis (text-based)
-    love.graphics.setFont(smallFont)
-    love.graphics.setColor(0.6, 0.5, 0.3)
-    love.graphics.printf("~ Arbeitsweg  ·  Feierabend  ·  Heimweg  ·  Zuhause ~", 0, 400, 800, "center")
+    --love.graphics.setFont(smallFont)
+    --love.graphics.setColor(0.6, 0.5, 0.3)
+    --love.graphics.printf("~ Arbeitsweg  ·  Feierabend  ·  Heimweg  ·  Zuhause ~", 0, 400, 800, "center")
 
     -- Restart hint (subtle)
     love.graphics.setColor(0.4, 0.4, 0.5, 0.5 + 0.3 * math.sin(t * 3))

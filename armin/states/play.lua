@@ -5,6 +5,7 @@ local Player = require("player")
 local Dog    = require("dog")
 local Camera = require("camera")
 local Utils  = require("utils")
+local Assets = require("assets")
 
 local PlayState = {}
 
@@ -251,6 +252,10 @@ function PlayState:draw(game)
         return
     end
 
+    -- ── Static background (does not scroll) ──
+    love.graphics.setColor(1, 1, 1)
+    love.graphics.draw(Assets.bg, 0, 0)
+
     -- ── Normal scene ──
     love.graphics.push()
     camera:apply()
@@ -260,6 +265,12 @@ function PlayState:draw(game)
         local sway = math.sin(love.timer.getTime() * 1.3) * 4
         love.graphics.translate(sway, math.sin(love.timer.getTime() * 0.9) * 2)
     end
+
+    -- ── Repeating canvas (scrolls with world) ──
+    love.graphics.setColor(1, 1, 1)
+    local cw, ch = Assets.canvas:getDimensions()
+    local canvasQuad = love.graphics.newQuad(0, 0, 6400, ch, cw, ch)
+    love.graphics.draw(Assets.canvas, canvasQuad, 0, 500 - ch)
 
     self:drawWorld()
     love.graphics.pop()
@@ -303,9 +314,9 @@ function PlayState:drawWorld()
     -- ── Platforms ──
     for _, box in ipairs(boxes) do
         if box.type == "solid" then
-            love.graphics.setColor(0.1, 0.1, 0.15)
+            love.graphics.setColor(0.18, 0.7, 0.18)
             love.graphics.rectangle("fill", box.x, box.y, box.width, box.height)
-            love.graphics.setColor(0.0, 0.8, 1.0)
+            love.graphics.setColor(0, 0, 0)
             love.graphics.setLineWidth(2)
             love.graphics.rectangle("line", box.x, box.y, box.width, box.height)
         elseif box.type == "bouncy" then
@@ -330,17 +341,17 @@ function PlayState:drawWorld()
         love.graphics.setLineWidth(2)
         love.graphics.rectangle("line", b.x, b.y, b.width, b.height)
 
-        -- Windows (2 rows × 3 cols)
-        local ws, wp = 18, 14
-        for row = 0, 1 do
-            for col = 0, 2 do
-                local wx = b.x + wp + col * (ws + wp)
-                local wy = b.y + wp + row * (ws + wp)
-                love.graphics.setColor(0.2, 0.6, 1.0, 0.3)
-                love.graphics.rectangle("fill", wx - 2, wy - 2, ws + 4, ws + 4)
-                love.graphics.setColor(0.3, 0.7, 1.0)
-                love.graphics.rectangle("fill", wx, wy, ws, ws)
-            end
+        -- Building logo
+        local logo = Assets.logos[currentLevel]
+        if logo then
+            local lw, lh = logo:getDimensions()
+            local maxW = b.width - 20  -- 10px padding each side
+            local scale = maxW / lw
+            local scaledH = lh * scale
+            local logoX = b.x + (b.width - lw * scale) / 2
+            local logoY = b.y + 15
+            love.graphics.setColor(1, 1, 1)
+            love.graphics.draw(logo, logoX, logoY, 0, scale, scale)
         end
 
         -- Door

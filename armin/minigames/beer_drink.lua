@@ -96,7 +96,7 @@ end
 function BeerDrink:draw()
     -- ── Header ──
     love.graphics.setColor(1, 0.85, 0)
-    love.graphics.printf("BEER DRINKING", 0, 85, 800, "center")
+    --love.graphics.printf("BEER DRINKING", 0, 85, 800, "center")
     love.graphics.setColor(0.7, 0.7, 0.7)
     -- love.graphics.printf(
     --     "Press SPACE when the marker is in the green zone!",

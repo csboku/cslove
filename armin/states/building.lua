@@ -126,10 +126,10 @@ function BuildingState:draw(game)
         -- Title
         love.graphics.setFont(titleFont)
         love.graphics.setColor(0.6, 0.4, 1.0)
-        love.graphics.printf(
-            "Building " .. currentLevel .. "  –  " .. (minigameNames[currentLevel] or "Minigame"),
-            0, 55, 800, "center"
-        )
+        -- love.graphics.printf(
+        --     "Building " .. currentLevel .. "  –  " .. (minigameNames[currentLevel] or "Minigame"),
+        --     0, 55, 800, "center"
+        -- )
     end
 
     -- Minigame content
